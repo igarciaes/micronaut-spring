@@ -1,6 +1,5 @@
 package greeting.example;
 
-
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -19,13 +18,18 @@ public class GreetingService {
 
     private AtomicReference<Greeting> lastGreeting = new AtomicReference<>();
 
-    public GreetingService(GreetingConfiguration greetingConfiguration) {
+    private final ExampleBean exampleBean;
+
+    public GreetingService(GreetingConfiguration greetingConfiguration,
+                           ExampleBean exampleBean) {
         this.greetingConfiguration = greetingConfiguration;
+        this.exampleBean = exampleBean;
     }
 
     public Greeting greeting( @Pattern(regexp = "\\D+") String name) {
         final Greeting greeting = new Greeting(counter.incrementAndGet(),
-                String.format(greetingConfiguration.getTemplate(), name));
+                String.format(greetingConfiguration.getTemplate(), name,
+                        exampleBean.getUrl(), exampleBean.getUsername(), exampleBean.getPassword()));
         lastGreeting.set(greeting);
         return greeting;
     }

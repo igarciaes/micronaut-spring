@@ -2,4 +2,9 @@ micronaut:
   application:
     name: greeting-service
 greeting:
-  template: "Hola, %s!"
+  template: "Hola, %s! %s %s %s"
+
+example:
+  url: http://localhost/example
+  username: example
+  password: example
